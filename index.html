@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Making a Bar Chart</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Internet Movide Database (IMDB) - Scatter Plot via D3 JS</title>
     <!--<script src="https://unpkg.com/d3@5.9.2/dist/d3.min.js"></script> -->
 
   </head>
@@ -39,23 +38,27 @@
     <select id="y-value">
       <option value="num_critic_for_reviews">num_critic_for_reviews</option>
       <option value="duration">duration</option>
-      <option value="duration">gross</option>
-      <option value="duration">num_voted_users</option>
-      <option value="duration">cast_total_facebook_likes</option>
-      <option value="duration">imdb_score</option>    
-      <option value="duration">movie_facebook_likes</option>     
-      <option value="duration">num_user_for_reviews</option>                                
+      <option value="gross">gross</option>
+      <option value="num_voted_users">num_voted_users</option>
+      <option value="cast_total_facebook_likes">cast_total_facebook_likes</option>
+      <option value="imdb_score">imdb_score</option>    
+      <option value="movie_facebook_likes">movie_facebook_likes</option>     
+      <option value="num_user_for_reviews">num_user_for_reviews</option>  
+      <option value="budget">budget</option>  
+      <option value="title_year">title_year</option>                               
     </select>
     <p><span><label for="x-axis">Select x-axis</label></span>
     <select id="x-value">
       <option value="num_critic_for_reviews">num_critic_for_reviews</option>
       <option value="duration">duration</option>
-      <option value="duration">gross</option>
-      <option value="duration">num_voted_users</option>
-      <option value="duration">cast_total_facebook_likes</option>
-      <option value="duration">imdb_score</option>    
-      <option value="duration">movie_facebook_likes</option>     
-      <option value="duration">num_user_for_reviews</option> 
+      <option value="gross">gross</option>
+      <option value="num_voted_users">num_voted_users</option>
+      <option value="cast_total_facebook_likes">cast_total_facebook_likes</option>
+      <option value="imdb_score">imdb_score</option>    
+      <option value="movie_facebook_likes">movie_facebook_likes</option>     
+      <option value="num_user_for_reviews">num_user_for_reviews</option>  
+      <option value="budget">budget</option>  
+      <option value="title_year">title_year</option> 
     </select>
 
     <button onclick="setGraph()">submit</button>
@@ -64,7 +67,7 @@
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <!--<script src="bundle.js"></script>-->
     <script>
-          function drawGraph(xText, yText) {
+    function drawGraph(xText, yText) {
       $('svg').remove();
       var margin = {top: 20, right: 20, bottom: 30, left: 80},
         width = 1500 - margin.left - margin.right,
@@ -102,7 +105,13 @@
       d3.csv("https://raw.githubusercontent.com/Sushanta77/D3/master/movie-usa.csv", function(data) {  
       //d3.csv('cars2017_new.csv', function(data){
       console.log(data);   
+      console.log(yText);
+      console.log(xText);
       data.forEach(d => {
+        d[yText] = +d[yText];
+        d[xText] = +d[xText];
+
+        /*
         d.num_critic_for_reviews = +d.num_critic_for_reviews;
         d.duration = +d.duration;
         d.num_voted_users = +d.num_voted_users;      
@@ -111,7 +120,19 @@
         d.movie_facebook_likes = +d.movie_facebook_likes;      
         d.num_user_for_reviews = +d.num_user_for_reviews; 
         d.genres = d.genres;
+        d.director_name = d.director_name;
+        d.actor_1_name = d.actor_1_name;
+        d.actor_2_name = d.actor_2_name;
+        d.actor_3_name = d.actor_3_name;
+        d.movie_imdb_link = d.movie_imdb_link;
+        d.language = d.language;
+        d.country = d.country;
+        d.budget = +d.budget;
+        d.movie_title = d.movie_title;
+        d.title_year = d.title_year;
+
         d.id = +d.id;
+        */
       });
 
       // don't want dots overlapping axis, so add in buffer to data domain
@@ -156,8 +177,10 @@
             tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-            tooltip.html(d["id"] + "<br/> " + d.director_name + "<br/>(" + xValue(d) 
-            + ", " + yValue(d) + ")")
+                tooltip.html("<b>Movie Name: </b>" + d.movie_title +
+                        "<br/><b>Director Name: </b>" + d.director_name + 
+                        "<br/><b>Actor Name: </b>" +d.actor_1_name+","+d.actor_2_name+","+d.actor_3_name +
+                        "<br/>(" + xValue(d) + ", " + yValue(d) + ")")
                .style("left", (d3.event.pageX + 10) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -194,7 +217,7 @@
 
     };
 
-    drawGraph('duration', 'gross');
+    drawGraph('gross','budget');
 
     function setGraph() {
       drawGraph($('#x-value').val(), $('#y-value').val());
