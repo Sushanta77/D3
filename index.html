@@ -37,13 +37,25 @@
   <body>
     <p><span><label for="y-axis">Select y-axis</label></span>
     <select id="y-value">
-      <option value="AverageHighwayMPG">AverageHighwayMPG</option>
-      <option value="AverageCityMPG">AverageCityMPG</option>
+      <option value="num_critic_for_reviews">num_critic_for_reviews</option>
+      <option value="duration">duration</option>
+      <option value="duration">gross</option>
+      <option value="duration">num_voted_users</option>
+      <option value="duration">cast_total_facebook_likes</option>
+      <option value="duration">imdb_score</option>    
+      <option value="duration">movie_facebook_likes</option>     
+      <option value="duration">num_user_for_reviews</option>                                
     </select>
     <p><span><label for="x-axis">Select x-axis</label></span>
     <select id="x-value">
-      <option value="AverageCityMPG">AverageCityMPG</option>
-      <option value="AverageHighwayMPG">AverageHighwayMPG</option>
+      <option value="num_critic_for_reviews">num_critic_for_reviews</option>
+      <option value="duration">duration</option>
+      <option value="duration">gross</option>
+      <option value="duration">num_voted_users</option>
+      <option value="duration">cast_total_facebook_likes</option>
+      <option value="duration">imdb_score</option>    
+      <option value="duration">movie_facebook_likes</option>     
+      <option value="duration">num_user_for_reviews</option> 
     </select>
 
     <button onclick="setGraph()">submit</button>
@@ -87,13 +99,17 @@
         .style("opacity", 0);        
 
       //d3.csv('https://flunky.github.io/cars2017.csv').then(data => { 
-      d3.csv("https://raw.githubusercontent.com/nsrecc/imdb-interactive-data-visualization/master/movies-usa.csv", function(data) {  
+      d3.csv("https://raw.githubusercontent.com/Sushanta77/D3/master/movie-usa.csv", function(data) {  
       //d3.csv('cars2017_new.csv', function(data){
       console.log(data);   
       data.forEach(d => {
-        d.AverageCityMPG = +d.AverageCityMPG;
-        d.AverageHighwayMPG = +d.AverageHighwayMPG;
-        d.EngineCylinders = +d.EngineCylinders;      
+        d.num_critic_for_reviews = +d.num_critic_for_reviews;
+        d.duration = +d.duration;
+        d.num_voted_users = +d.num_voted_users;      
+        d.cast_total_facebook_likes = +d.cast_total_facebook_likes;      
+        d.imdb_score = +d.imdb_score;      
+        d.movie_facebook_likes = +d.movie_facebook_likes;      
+        d.num_user_for_reviews = +d.num_user_for_reviews;                   
       });
 
       // don't want dots overlapping axis, so add in buffer to data domain
@@ -138,7 +154,7 @@
             tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-            tooltip.html(d["Player"] + "<br/> " + d.School + "<br/>(" + xValue(d) 
+            tooltip.html(d["id"] + "<br/> " + d.director_name + "<br/>(" + xValue(d) 
             + ", " + yValue(d) + ")")
                .style("left", (d3.event.pageX + 10) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
