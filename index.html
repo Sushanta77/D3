@@ -66,9 +66,9 @@
     <script>
           function drawGraph(xText, yText) {
       $('svg').remove();
-      var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+      var margin = {top: 20, right: 20, bottom: 30, left: 80},
+        width = 1500 - margin.left - margin.right,
+        height = 900 - margin.top - margin.bottom;
 
       // setup x 
       var xValue = function(d) { return d[xText];}, // data -> value
@@ -148,7 +148,7 @@
           .data(data)
         .enter().append("circle")
           .attr("class", "dot")
-          .attr("r", 3.5)
+          .attr("r", 4.5)
           .attr("cx", xMap)
           .attr("cy", yMap)
           .style("fill", function(d) { return color(cValue(d));}) 
